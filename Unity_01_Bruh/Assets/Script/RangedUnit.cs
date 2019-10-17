@@ -14,6 +14,15 @@ public class RangedUnit : Unit
         speed = 0.5f;
         team = Random.Range(0, 2);
         GetComponent<MeshRenderer>().material = mat[team];
+        switch (team)
+        {
+            case 0:
+                gameObject.tag = "Team 1";
+                break;
+            case 1:
+                gameObject.tag = "Team 2";
+                break;
+        }
     }
 
 }

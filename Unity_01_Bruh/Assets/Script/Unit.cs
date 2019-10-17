@@ -29,6 +29,47 @@ public abstract class Unit : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (!IsInRange(GetClosestUnit()))
+        {
+            transform.position = Vector3.MoveTowards(transform.position, GetClosestUnit().transform.position, speed * Time.deltaTime);
+        }
+    }
+
+    protected bool IsInRange(GameObject enemy)
+    {
+        if (Vector3.Distance(transform.position, enemy.transform.position) <= range)
+            return true;
+        else return false;
+    }
+
+    protected GameObject GetClosestUnit()
+    {
+        GameObject unit = null;
+
+        GameObject[] units = null;
+
+        switch (team)
+        {
+            case 0:
+                units = GameObject.FindGameObjectsWithTag("Team 2");
+                break;
+            case 1:
+                units = GameObject.FindGameObjectsWithTag("Team 1");
+                break;
+        }
+
+        float distance = 9999;
+
+        foreach (GameObject temp in units)
+        {
+            float tempDist = Vector3.Distance(transform.position, temp.transform.position);
+            if (tempDist <= distance)
+            {
+                distance = tempDist;
+                unit = temp;
+            }
+        }
+
+        return unit;
     }
 }
